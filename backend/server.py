@@ -206,6 +206,11 @@ async def create_notification(obra_id: str, user_id: str, title: str, message: s
     )
     await db.notifications.insert_one(notification.dict())
 
+# Routes - Root
+@api_router.get("/")
+async def root():
+    return {"message": "Diário de Obra Digital API", "status": "running"}
+
 # Routes - Users
 @api_router.post("/users", response_model=User)
 async def create_user(user: UserCreate):
