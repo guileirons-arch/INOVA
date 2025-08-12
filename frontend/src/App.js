@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
+import { PhotosView, PhotoUploadForm } from './components/PhotosView';
+import { MaterialsView, MaterialRequestForm } from './components/MaterialsView';
+import { ServicesView, ServiceMeasurementForm } from './components/ServicesView';
+import NotificationsView from './components/NotificationsView';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
