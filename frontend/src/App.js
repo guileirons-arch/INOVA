@@ -704,51 +704,80 @@ function App() {
         )}
         
         {currentView === 'photos' && (
-          <div className="p-4 pb-20">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Fotos (Em breve)</h2>
-            <div className="bg-white rounded-xl p-8 text-center">
-              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              </svg>
-              <p className="text-gray-600">Funcionalidade de fotos será implementada em breve</p>
-            </div>
-          </div>
+          <PhotosView 
+            currentObra={currentObra}
+            onNavigate={handleNavigate}
+          />
+        )}
+        
+        {currentView === 'photo-form' && (
+          <PhotoUploadForm 
+            currentObra={currentObra}
+            onSubmit={async (formData) => {
+              await axios.post(`${API}/photos`, formData);
+              // Reload stats
+              if (currentObra) {
+                const statsRes = await axios.get(`${API}/dashboard/stats/${currentObra.id}`);
+                setStats(statsRes.data);
+              }
+              handleNavigate('photos');
+            }}
+            onCancel={() => handleNavigate('photos')}
+          />
         )}
         
         {currentView === 'materials' && (
-          <div className="p-4 pb-20">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Solicitações de Material (Em breve)</h2>
-            <div className="bg-white rounded-xl p-8 text-center">
-              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-              </svg>
-              <p className="text-gray-600">Funcionalidade de materiais será implementada em breve</p>
-            </div>
-          </div>
+          <MaterialsView 
+            currentObra={currentObra}
+            onNavigate={handleNavigate}
+            userRole={currentUser?.role}
+          />
+        )}
+        
+        {currentView === 'material-form' && (
+          <MaterialRequestForm 
+            currentObra={currentObra}
+            onSubmit={async (formData) => {
+              await axios.post(`${API}/material-requests`, formData);
+              // Reload stats
+              if (currentObra) {
+                const statsRes = await axios.get(`${API}/dashboard/stats/${currentObra.id}`);
+                setStats(statsRes.data);
+              }
+              handleNavigate('materials');
+            }}
+            onCancel={() => handleNavigate('materials')}
+          />
         )}
         
         {currentView === 'services' && (
-          <div className="p-4 pb-20">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Medições de Serviço (Em breve)</h2>
-            <div className="bg-white rounded-xl p-8 text-center">
-              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
-              <p className="text-gray-600">Funcionalidade de medições será implementada em breve</p>
-            </div>
-          </div>
+          <ServicesView 
+            currentObra={currentObra}
+            onNavigate={handleNavigate}
+          />
+        )}
+        
+        {currentView === 'service-form' && (
+          <ServiceMeasurementForm 
+            currentObra={currentObra}
+            onSubmit={async (formData) => {
+              await axios.post(`${API}/service-measurements`, formData);
+              // Reload stats
+              if (currentObra) {
+                const statsRes = await axios.get(`${API}/dashboard/stats/${currentObra.id}`);
+                setStats(statsRes.data);
+              }
+              handleNavigate('services');
+            }}
+            onCancel={() => handleNavigate('services')}
+          />
         )}
         
         {currentView === 'notifications' && (
-          <div className="p-4 pb-20">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Notificações (Em breve)</h2>
-            <div className="bg-white rounded-xl p-8 text-center">
-              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-3.5-3.5a2.121 2.121 0 010-3L20 7h-5M9 17H4l3.5-3.5a2.121 2.121 0 000-3L4 7h5" />
-              </svg>
-              <p className="text-gray-600">Sistema de notificações será implementado em breve</p>
-            </div>
-          </div>
+          <NotificationsView 
+            currentObra={currentObra}
+            onNavigate={handleNavigate}
+          />
         )}
       </main>
       
